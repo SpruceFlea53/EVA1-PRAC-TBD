@@ -1,0 +1,758 @@
+Ejercicio 1
+
+MySQL Shell 1.0.10
+
+Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+Currently in JavaScript mode. Use \sql to switch to SQL mode and execute queries
+.
+mysql-js> \sql
+Switching to SQL mode... Commands end with ;
+mysql-sql> \connect -c root@localhost
+Creating a Classic Session to 'root@localhost'
+Enter password: ****
+Your MySQL connection id is 3
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| datos_personal     |
+| mundo              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.08 sec)
+mysql-sql> create database ejercicios;
+Query OK, 1 row affected (0.02 sec)
+mysql-sql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| datos_personal     |
+| ejercicios         |
+| mundo              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.00 sec)
+mysql-sql> create user 'usu_eva1'@'localhost' identified by 'qqqq'
+       ... ;
+Query OK, 0 rows affected (0.04 sec)
+mysql-sql> \use ejercicios
+Schema set to `ejercicios`.
+mysql-sql> grant all on ejercicios.* to 'usu_eva1
+       ... ;
+       ... asdasdas;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near ''usu
+_eva1
+asdasdas' at line 1
+mysql-sql> grant all on ejercicios.* to 'usu_eva1'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> \connect -c usu_eva1@localhost
+Creating a Classic Session to 'usu_eva1@localhost'
+Enter password: ****
+Closing old connection...
+Your MySQL connection id is 4
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| ejercicios         |
++--------------------+
+2 rows in set (0.00 sec)
+mysql-sql> \set ejercicios
+       ... ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '\set
+ ejercicios' at line 1
+mysql-sql> set ejercicios;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '' at
+ line 1
+mysql-sql> \use ejercicios
+Schema set to `ejercicios`.
+mysql-sql> show tables;
+Empty set (0.00 sec)
+mysql-sql> create table
+
+Ejercicio 2
+
+mysql-sql> set ejercicios;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '' at
+ line 1
+mysql-sql> \use ejercicios
+Schema set to `ejercicios`.
+mysql-sql> show tables;
+Empty set (0.00 sec)
+mysql-sql> create table alumno(
+       ... alumno_id int,
+       ... nom_alumno varchar(50),
+       ... ape_pat_alumno varchar(50),
+       ... ape_mat_alumno varchar(50),
+       ... no_control_alumno int);
+Query OK, 0 rows affected (0.62 sec)
+mysql-sql> show tables;
++----------------------+
+| Tables_in_ejercicios |
++----------------------+
+| alumno               |
++----------------------+
+1 row in set (0.00 sec)
+mysql-sql>
+
+Ejercicio 3
+
+mysql-sql> show tables;
++----------------------+
+| Tables_in_ejercicios |
++----------------------+
+| alumno               |
++----------------------+
+1 row in set (0.00 sec)
+mysql-sql> create table if not exists alumno(
+       ... alumno_id int,
+       ... nom_alumno varchar(50),
+       ... ape_pat_alumno varchar(50),
+       ... ape_mat_alumno varchar(50),
+       ... no_control_alumno int);
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Note (code 1050): Table 'alumno' already exists
+mysql-sql>
+
+Ejercicio 4
+
+mysql-sql> create table dup_alumno like alumno;
+Query OK, 0 rows affected (0.63 sec)
+mysql-sql> show tables;
++----------------------+
+| Tables_in_ejercicios |
++----------------------+
+| alumno               |
+| dup_alumno           |
++----------------------+
+2 rows in set (0.00 sec)
+mysql-sql> desc dup_alumno
+       ... ;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| alumno_id         | int(11)     | YES  |     | null    |       |
+| nom_alumno        | varchar(50) | YES  |     | null    |       |
+| ape_pat_alumno    | varchar(50) | YES  |     | null    |       |
+| ape_mat_alumno    | varchar(50) | YES  |     | null    |       |
+| no_control_alumno | int(11)     | YES  |     | null    |       |
++-------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.05 sec)
+mysql-sql>
+
+Ejercicio 5
+
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| alumno_id         | int(11)     | YES  |     | null    |       |
+| nom_alumno        | varchar(50) | YES  |     | null    |       |
+| ape_pat_alumno    | varchar(50) | YES  |     | null    |       |
+| ape_mat_alumno    | varchar(50) | YES  |     | null    |       |
+| no_control_alumno | int(11)     | YES  |     | null    |       |
++-------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.05 sec)
+mysql-sql> insert into ejercicios values(1,'Gerardo','Herrera','Magallanes',1455
+0535);
+ERROR: 1146 (42S02): Table 'ejercicios.ejercicios' doesn't exist
+mysql-sql> insert into alumno values(1,'Gerardo','Herrera','Magallanes',14550535
+);
+Query OK, 1 row affected (0.28 sec)
+mysql-sql> select * from alumno;
++-----------+------------+----------------+----------------+-------------------+
+
+| alumno_id | nom_alumno | ape_pat_alumno | ape_mat_alumno | no_control_alumno |
+
++-----------+------------+----------------+----------------+-------------------+
+
+|         1 | Gerardo    | Herrera        | Magallanes     |          14550535 |
+
++-----------+------------+----------------+----------------+-------------------+
+
+1 row in set (0.00 sec)
+mysql-sql> insert into alumno values(2,'Stephanie','Hernandez','Dominguez',14550
+596);
+Query OK, 1 row affected (0.29 sec)
+mysql-sql> select * from alumno;
++-----------+------------+----------------+----------------+-------------------+
+
+| alumno_id | nom_alumno | ape_pat_alumno | ape_mat_alumno | no_control_alumno |
+
++-----------+------------+----------------+----------------+-------------------+
+
+|         1 | Gerardo    | Herrera        | Magallanes     |          14550535 |
+
+|         2 | Stephanie  | Hernandez      | Dominguez      |          14550596 |
+
++-----------+------------+----------------+----------------+-------------------+
+
+2 rows in set (0.00 sec)
+mysql-sql> insert into alumno values(3,'David','Vega','Guerra',14550380);
+Query OK, 1 row affected (0.06 sec)
+mysql-sql> insert into alumno values(4,'William','Roberts II','Alvidrez',1455053
+4);
+Query OK, 1 row affected (0.38 sec)
+mysql-sql> insert into alumno values(5,'Bryan','Vega','Rios',14550530);
+Query OK, 1 row affected (0.09 sec)
+mysql-sql> select * from alumno;
++-----------+------------+----------------+----------------+-------------------+
+
+| alumno_id | nom_alumno | ape_pat_alumno | ape_mat_alumno | no_control_alumno |
+
++-----------+------------+----------------+----------------+-------------------+
+
+|         1 | Gerardo    | Herrera        | Magallanes     |          14550535 |
+
+|         2 | Stephanie  | Hernandez      | Dominguez      |          14550596 |
+
+|         3 | David      | Vega           | Guerra         |          14550380 |
+
+|         4 | William    | Roberts II     | Alvidrez       |          14550534 |
+
+|         5 | Bryan      | Vega           | Rios           |          14550530 |
+
++-----------+------------+----------------+----------------+-------------------+
+
+5 rows in set (0.00 sec)
+mysql-sql>
+
+Ejercicio 6
+
+mysql-sql> create table carrera(
+       ... carrera_id int,
+       ... nombre_carrera varchar(50),
+       ... creditos_carrera;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '' at
+ line 4
+mysql-sql> create table carrera(
+       ... carrera_id int not null,
+       ... nombre_carrera varchar(50) not null,
+       ... creditos_carrera int not null);
+Query OK, 0 rows affected (0.31 sec)
+mysql-sql> desc carrera;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| carrera_id       | int(11)     | NO   |     | null    |       |
+| nombre_carrera   | varchar(50) | NO   |     | null    |       |
+| creditos_carrera | int(11)     | NO   |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql-sql>
+
+Ejercicio 7
+
+mysql-sql> create table docentes(
+       ... docentes_id int not null,
+       ... nombre_docente varchar(50) not null,
+       ... apellido_pat_docente varchar(50) not null,
+       ... apellido_mat_docente varchar(50) not null,
+       ... horas_plaza int default 8 not null,
+       ... departamento_docente ENUM('Sistemas y computacion','Ingenieria indust
+rial','Ciencias de la tierra','Ciencias economico administrativas','Ciencias bas
+icas') not null);
+Query OK, 0 rows affected (1.20 sec)
+mysql-sql> show tables
+       ... ;
++----------------------+
+| Tables_in_ejercicios |
++----------------------+
+| alumno               |
+| carrera              |
+| docentes             |
+| dup_alumno           |
++----------------------+
+4 rows in set (0.00 sec)
+mysql-sql> desc docentes;
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+-------+
+| Field                | Type
+
+| Null | Key | Default | Extra |
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+-------+
+| docentes_id          | int(11)
+
+| NO   |     | null    |       |
+| nombre_docente       | varchar(50)
+
+| NO   |     | null    |       |
+| apellido_pat_docente | varchar(50)
+
+| NO   |     | null    |       |
+| apellido_mat_docente | varchar(50)
+
+| NO   |     | null    |       |
+| horas_plaza          | int(11)
+
+| NO   |     | 8       |       |
+| departamento_docente | enum('Sistemas y computacion','Ingenieria industrial','
+Ciencias de la tierra','Ciencias economico administrativas','Ciencias basicas')
+| NO   |     | null    |       |
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+-------+
+6 rows in set (0.01 sec)
+mysql-sql>
+
+Ejercicio 8
+
+mysql-sql> create table institutos(
+       ... instituto_id int,
+       ... nombre_instituto varchar(50),
+       ... estado_instituto ENUM('Aguascalientes','Baja california','Baja califo
+rnia sur','Campeche','Chiapas','Chihuahua','Ciudad de mexico','Coahuila','Colima
+','Durango','Guanajuato','Guerrero','Hidalgo','Jalisco','Mexico','Michoacan','Mo
+relos','Nayarit','Nuevo leon','Oaxaca','Puebla','Queretaro','Quintana Roo',' San
+ luis potosi','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Y
+ucatan','Zacatecas'));
+Query OK, 0 rows affected (0.42 sec)
+mysql-sql> show tables;
++----------------------+
+| Tables_in_ejercicios |
++----------------------+
+| alumno               |
+| carrera              |
+| docentes             |
+| dup_alumno           |
+| institutos           |
++----------------------+
+5 rows in set (0.00 sec)
+mysql-sql> desc institutos;
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+-------+
+| Field            | Type
+
+
+
+
+              | Null | Key | Default | Extra |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+-------+
+| instituto_id     | int(11)
+
+
+
+
+              | YES  |     | null    |       |
+| nombre_instituto | varchar(50)
+
+
+
+
+              | YES  |     | null    |       |
+| estado_instituto | enum('Aguascalientes','Baja california','Baja california su
+r','Campeche','Chiapas','Chihuahua','Ciudad de mexico','Coahuila','Colima','Dura
+ngo','Guanajuato','Guerrero','Hidalgo','Jalisco','Mexico','Michoacan','Morelos',
+'Nayarit','Nuevo leon','Oaxaca','Puebla','Queretaro','Quintana Roo',' San luis p
+otosi','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatan'
+,'Zacatecas') | YES  |     | null    |       |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql-sql>
+
+Ejercicio 9 y 10
+
+mysql-sql> alter table alumno change alumno_id alumno_id int primary key not nul
+l,
+       ... change no_control_alumno no_control_alumno int unique not null;
+Query OK, 0 rows affected, 1 warning (1.03 sec)
+
+Records: 0  Duplicates: 0  Warnings: 1
+Warning (code 1831): Duplicate index 'no_control_alumno_2' defined on the table
+'ejercicios.alumno'. This is deprecated and will be disallowed in a future relea
+se.
+mysql-sql> desc alumno;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| alumno_id         | int(11)     | NO   | PRI | null    |       |
+| nom_alumno        | varchar(50) | YES  |     | null    |       |
+| ape_pat_alumno    | varchar(50) | YES  |     | null    |       |
+| ape_mat_alumno    | varchar(50) | YES  |     | null    |       |
+| no_control_alumno | int(11)     | NO   | UNI | null    |       |
++-------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql-sql> alter table alumno change alumno_id alumno_id int not null auto incre
+ment;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'auto
+ increment' at line 1
+mysql-sql> alter table alumno change alumno_id alumno_id int not null auto_incre
+ment;
+Query OK, 5 rows affected (1.13 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+mysql-sql> desc alumno;
++-------------------+-------------+------+-----+---------+----------------+
+| Field             | Type        | Null | Key | Default | Extra          |
++-------------------+-------------+------+-----+---------+----------------+
+| alumno_id         | int(11)     | NO   | PRI | null    | auto_increment |
+| nom_alumno        | varchar(50) | YES  |     | null    |                |
+| ape_pat_alumno    | varchar(50) | YES  |     | null    |                |
+| ape_mat_alumno    | varchar(50) | YES  |     | null    |                |
+| no_control_alumno | int(11)     | NO   | UNI | null    |                |
++-------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+mysql-sql> alter table alumno change nom_alumno nombre_alumno varchar(50),
+       ... change ape_pat_alumno apellido_pat_alumno varchar(50),
+       ... change ape_mat_alumno apellido_mat_alumno varchar(50);
+Query OK, 0 rows affected (0.10 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc alumno;
++---------------------+-------------+------+-----+---------+----------------+
+| Field               | Type        | Null | Key | Default | Extra          |
++---------------------+-------------+------+-----+---------+----------------+
+| alumno_id           | int(11)     | NO   | PRI | null    | auto_increment |
+| nombre_alumno       | varchar(50) | YES  |     | null    |                |
+| apellido_pat_alumno | varchar(50) | YES  |     | null    |                |
+| apellido_mat_alumno | varchar(50) | YES  |     | null    |                |
+| no_control_alumno   | int(11)     | NO   | UNI | null    |                |
++---------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+mysql-sql>
+
+Ejercicio 11
+
+mysql-sql> desc alumno;
++---------------------+-------------+------+-----+---------+----------------+
+| Field               | Type        | Null | Key | Default | Extra          |
++---------------------+-------------+------+-----+---------+----------------+
+| alumno_id           | int(11)     | NO   | PRI | null    | auto_increment |
+| nombre_alumno       | varchar(50) | YES  |     | null    |                |
+| apellido_pat_alumno | varchar(50) | YES  |     | null    |                |
+| apellido_mat_alumno | varchar(50) | YES  |     | null    |                |
+| no_control_alumno   | int(11)     | NO   | UNI | null    |                |
++---------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+mysql-sql> show tables;
++----------------------+
+| Tables_in_ejercicios |
++----------------------+
+| alumno               |
+| carrera              |
+| docentes             |
+| dup_alumno           |
+| institutos           |
++----------------------+
+5 rows in set (0.00 sec)
+mysql-sql> desc carrera;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| carrera_id       | int(11)     | NO   |     | null    |       |
+| nombre_carrera   | varchar(50) | NO   |     | null    |       |
+| creditos_carrera | int(11)     | NO   |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql-sql> alter table carrera change carrera_id carrera_id int key not null aut
+_increment;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'aut_
+increment' at line 1
+mysql-sql> alter table carrera change carrera_id carrera_id int key not null aut
+o_increment;
+Query OK, 0 rows affected (0.72 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc carrera;
++------------------+-------------+------+-----+---------+----------------+
+| Field            | Type        | Null | Key | Default | Extra          |
++------------------+-------------+------+-----+---------+----------------+
+| carrera_id       | int(11)     | NO   | PRI | null    | auto_increment |
+| nombre_carrera   | varchar(50) | NO   |     | null    |                |
+| creditos_carrera | int(11)     | NO   |     | null    |                |
++------------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+mysql-sql> desc docentes;
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+-------+
+| Field                | Type
+
+| Null | Key | Default | Extra |
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+-------+
+| docentes_id          | int(11)
+
+| NO   |     | null    |       |
+| nombre_docente       | varchar(50)
+
+| NO   |     | null    |       |
+| apellido_pat_docente | varchar(50)
+
+| NO   |     | null    |       |
+| apellido_mat_docente | varchar(50)
+
+| NO   |     | null    |       |
+| horas_plaza          | int(11)
+
+| NO   |     | 8       |       |
+| departamento_docente | enum('Sistemas y computacion','Ingenieria industrial','
+Ciencias de la tierra','Ciencias economico administrativas','Ciencias basicas')
+| NO   |     | null    |       |
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+-------+
+6 rows in set (0.00 sec)
+mysql-sql> alter table docentes change docentes_id docentes_id int key not null
+auto_increment;
+Query OK, 0 rows affected (0.92 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc docentes;
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+----------------+
+| Field                | Type
+
+| Null | Key | Default | Extra          |
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+----------------+
+| docentes_id          | int(11)
+
+| NO   | PRI | null    | auto_increment |
+| nombre_docente       | varchar(50)
+
+| NO   |     | null    |                |
+| apellido_pat_docente | varchar(50)
+
+| NO   |     | null    |                |
+| apellido_mat_docente | varchar(50)
+
+| NO   |     | null    |                |
+| horas_plaza          | int(11)
+
+| NO   |     | 8       |                |
+| departamento_docente | enum('Sistemas y computacion','Ingenieria industrial','
+Ciencias de la tierra','Ciencias economico administrativas','Ciencias basicas')
+| NO   |     | null    |                |
++----------------------+--------------------------------------------------------
+--------------------------------------------------------------------------------
++------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+mysql-sql> show tables;
++----------------------+
+| Tables_in_ejercicios |
++----------------------+
+| alumno               |
+| carrera              |
+| docentes             |
+| dup_alumno           |
+| institutos           |
++----------------------+
+5 rows in set (0.00 sec)
+mysql-sql> desc dup_alumno
+       ... ;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| alumno_id         | int(11)     | YES  |     | null    |       |
+| nom_alumno        | varchar(50) | YES  |     | null    |       |
+| ape_pat_alumno    | varchar(50) | YES  |     | null    |       |
+| ape_mat_alumno    | varchar(50) | YES  |     | null    |       |
+| no_control_alumno | int(11)     | YES  |     | null    |       |
++-------------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql-sql> alter table dup_alumno change alumno_id alumno_id int key not null au
+to_increment;
+Query OK, 0 rows affected (0.85 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc dup_alumno
+       ... ;
++-------------------+-------------+------+-----+---------+----------------+
+| Field             | Type        | Null | Key | Default | Extra          |
++-------------------+-------------+------+-----+---------+----------------+
+| alumno_id         | int(11)     | NO   | PRI | null    | auto_increment |
+| nom_alumno        | varchar(50) | YES  |     | null    |                |
+| ape_pat_alumno    | varchar(50) | YES  |     | null    |                |
+| ape_mat_alumno    | varchar(50) | YES  |     | null    |                |
+| no_control_alumno | int(11)     | YES  |     | null    |                |
++-------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+mysql-sql> show tables;
++----------------------+
+| Tables_in_ejercicios |
++----------------------+
+| alumno               |
+| carrera              |
+| docentes             |
+| dup_alumno           |
+| institutos           |
++----------------------+
+5 rows in set (0.00 sec)
+mysql-sql> desc institutos;
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+-------+
+| Field            | Type
+
+
+
+
+              | Null | Key | Default | Extra |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+-------+
+| instituto_id     | int(11)
+
+
+
+
+              | YES  |     | null    |       |
+| nombre_instituto | varchar(50)
+
+
+
+
+              | YES  |     | null    |       |
+| estado_instituto | enum('Aguascalientes','Baja california','Baja california su
+r','Campeche','Chiapas','Chihuahua','Ciudad de mexico','Coahuila','Colima','Dura
+ngo','Guanajuato','Guerrero','Hidalgo','Jalisco','Mexico','Michoacan','Morelos',
+'Nayarit','Nuevo leon','Oaxaca','Puebla','Queretaro','Quintana Roo',' San luis p
+otosi','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatan'
+,'Zacatecas') | YES  |     | null    |       |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql-sql> alter table institutos change instituto_id instituto_id int key not n
+ull auto_increment;
+Query OK, 0 rows affected (0.73 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc institutos;
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+----------------+
+| Field            | Type
+
+
+
+
+              | Null | Key | Default | Extra          |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+----------------+
+| instituto_id     | int(11)
+
+
+
+
+              | NO   | PRI | null    | auto_increment |
+| nombre_instituto | varchar(50)
+
+
+
+
+              | YES  |     | null    |                |
+| estado_instituto | enum('Aguascalientes','Baja california','Baja california su
+r','Campeche','Chiapas','Chihuahua','Ciudad de mexico','Coahuila','Colima','Dura
+ngo','Guanajuato','Guerrero','Hidalgo','Jalisco','Mexico','Michoacan','Morelos',
+'Nayarit','Nuevo leon','Oaxaca','Puebla','Queretaro','Quintana Roo',' San luis p
+otosi','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatan'
+,'Zacatecas') | YES  |     | null    |                |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+mysql-sql>
+
+Ejercicio 12 Respaldo de todo
+
+C:\WINDOWS\system32>
+C:\WINDOWS\system32>cd ..
+
+C:\>cd "Program Files"
+
+C:\Program Files>cd MySQL
+
+C:\Program Files\MySQL>cd "MySQL Server 5.7"
+
+C:\Program Files\MySQL\MySQL Server 5.7>cd bin
+
+C:\Program Files\MySQL\MySQL Server 5.7\bin>mysqldump -u root -p -h localhost --
+databases ejercicios>ejercicios.sql
+Enter password: ****
+
+C:\Program Files\MySQL\MySQL Server 5.7\bin>
+
+Ejercicio 13 Respaldo tabla alumnos
+
+C:\Program Files\MySQL\MySQL Server 5.7\bin>mysqldump -u root -p -h localhost ej
+ercicios alumno>alumno.sql
+Enter password: ****
+
+C:\Program Files\MySQL\MySQL Server 5.7\bin>
+
+Ejercicio 14 Respaldo alumnos y carrera
+
+C:\Program Files\MySQL\MySQL Server 5.7\bin>mysqldump -u root -p -h localhost ej
+ercicios alumno carrera>AyC.sql
+Enter password: ****
+
+C:\Program Files\MySQL\MySQL Server 5.7\bin>

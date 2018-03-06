@@ -1,0 +1,43 @@
+MySQL Shell 1.0.10
+
+Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+Currently in JavaScript mode. Use \sql to switch to SQL mode and execute queries
+.
+mysql-js> \mysql
+SyntaxError: Unexpected token ILLEGAL
+mysql-js> \sql
+Switching to SQL mode... Commands end with ;
+mysql-sql> \connect -c root@localhost
+Creating a Classic Session to 'root@localhost'
+Enter password: ****
+Your MySQL connection id is 25
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> create user 'Prueba'@'localhost' identified by 'qqqq';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> revoke all privileges, grant option from 'Prueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on *.* to 'Prueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> \connect -c root@localhost
+Creating a Classic Session to 'root@localhost'
+Enter password: ****
+Closing old connection...
+Your MySQL connection id is 26
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> \connect -c Prueba@localhost
+Creating a Classic Session to 'Prueba@localhost'
+Enter password: ****
+Closing old connection...
+Your MySQL connection id is 27
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql>

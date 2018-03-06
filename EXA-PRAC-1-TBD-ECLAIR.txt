@@ -1,0 +1,822 @@
+MySQL Shell 1.0.10
+
+Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+Currently in JavaScript mode. Use \sql to switch to SQL mode and execute queries
+.
+mysql-js> \sql
+Switching to SQL mode... Commands end with ;
+mysql-sql> \connect -c root@localhost
+Creating a Classic Session to 'root@localhost'
+Enter password: ***
+ERROR: 1045 (28000): Access denied for user 'root'@'localhost' (using password:
+YES)
+mysql-sql> \connect -c root@localhost
+Creating a Classic Session to 'root@localhost'
+Enter password: ****
+Your MySQL connection id is 13
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+
+
+Creacion de usuario administrador de base de datos tecnologico 
+
+mysql-sql> create database Tecnologico;
+Query OK, 1 row affected (0.02 sec)
+mysql-sql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| datos_personal     |
+| ejercicios         |
+| mundo              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tecnologico        |
+| world              |
++--------------------+
+10 rows in set (0.00 sec)
+mysql-sql> show users;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'user
+s' at line 1
+mysql-sql> create user 'adm_tec'@'localhost' identified by 'qqqq';
+Query OK, 0 rows affected (0.07 sec)
+mysql-sql> grant all on tecnologico.* to 'adm_tec'@'localhost';
+Query OK, 0 rows affected (0.04 sec)
+mysql-sql> \connect -c adm_tec@localhost
+Creating a Classic Session to 'adm_tec@localhost'
+Enter password: ****
+Closing old connection...
+Your MySQL connection id is 14
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> create user 'alumno_tecnologico'@'localhost' identified by 'qqqq';
+ERROR: 1227 (42000): Access denied; you need (at least one of) the CREATE USER p
+rivilege(s) for this operation
+mysql-sql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| tecnologico        |
++--------------------+
+2 rows in set (0.00 sec)
+mysql-sql> \use tecnologico
+Schema set to `tecnologico`.
+mysql-sql> show tables;
+Empty set (0.00 sec)
+mysql-sql> create table alumnos(
+       ... alumno_id int key not null auto_increment,
+       ... nombre_alumno varchar,.
+       ... ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '.' a
+t line 3
+
+creacion de tabla alumnos con datos de alumnos
+
+mysql-sql> create table alumnos(
+       ... alumno_id int primary key not null auto_increment,
+       ... nombre_alumno varchar(50) not null,
+       ... apellido_paterno varchar(50) not null,
+       ... apellido_materno varchar(50) not null,
+       ... Carrera ENUM('Arquitectura','Ingenieria industrial','Ingenieria infor
+matica','Ingenieria en gestion empresarial','Ingenieria en sistemas computaciona
+les','Licenciatura en administracion','Ingenieria en diseño industrial'),
+       ... semestre int not null,
+       ... correo varchar(50) unique not null);
+Query OK, 0 rows affected (0.53 sec)
+mysql-sql> desc alumnos;
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+| Field            | Type
+
+                                                                           | Nul
+l | Key | Default | Extra          |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+| alumno_id        | int(11)
+
+                                                                           | NO
+  | PRI | null    | auto_increment |
+| nombre_alumno    | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| apellido_paterno | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| apellido_materno | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| Carrera          | enum('Arquitectura','Ingenieria industrial','Ingenieria inf
+ormatica','Ingenieria en gestion empresarial','Ingenieria en sistemas computacio
+nales','Licenciatura en administracion','Ingenieria en diseño industrial') | YES
+  |     | null    |                |
+| semestre         | int(11)
+
+                                                                           | NO
+  |     | null    |                |
+| correo           | varchar(50)
+
+                                                                           | NO
+  | UNI | null    |                |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+7 rows in set (0.01 sec)
+mysql-sql> alter table alumnos change Carrera carrera ENUM('Arquitectura','Ingen
+ieria industrial','Ingenieria informatica','Ingenieria en gestion empresarial','
+Ingenieria en sistemas computacionales','Licenciatura en administracion','Ingeni
+eria en diseño industrial')not null;
+Query OK, 0 rows affected (0.64 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc alumnos;
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+| Field            | Type
+
+                                                                           | Nul
+l | Key | Default | Extra          |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+| alumno_id        | int(11)
+
+                                                                           | NO
+  | PRI | null    | auto_increment |
+| nombre_alumno    | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| apellido_paterno | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| apellido_materno | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| carrera          | enum('Arquitectura','Ingenieria industrial','Ingenieria inf
+ormatica','Ingenieria en gestion empresarial','Ingenieria en sistemas computacio
+nales','Licenciatura en administracion','Ingenieria en diseño industrial') | NO
+  |     | null    |                |
+| semestre         | int(11)
+
+                                                                           | NO
+  |     | null    |                |
+| correo           | varchar(50)
+
+                                                                           | NO
+  | UNI | null    |                |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+7 rows in set (0.01 sec)
+mysql-sql>
+
+Creación de tabla carreras
+
+mysql-sql> create table carreras(
+       ... carrera_id int key not null auto_increment,
+       ... nombre_carrera ENUM('Arquitectura','Ingenieria industrial','Ingenieri
+a informatica','ingenieria en gestion empresarial','ingenieria en sistemas compu
+tacionales','licenciatura en administracion','ingenieria en diseño industrial')
+not null,
+       ... abreviatura varchar(50) not null;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '' at
+ line 4
+mysql-sql> create table carreras(
+       ... carrera_id int key not null auto_increment,
+       ... nombre_carrera ENUM('Arquitectura','Ingenieria industrial','Ingenieri
+a informatica','ingenieria en gestion empresarial','ingenieria en sistemas compu
+tacionales','licenciatura en administracion','ingenieria en diseño industrial')
+not null,
+       ... abreviatura varchar(50) not null);
+Query OK, 0 rows affected (0.35 sec)
+mysql-sql> alter table carreras change abreviatura abreviatura varchar(50) not n
+ull unique;
+Query OK, 0 rows affected (0.37 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc carreras;
++----------------+--------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------------------------------+------
++-----+---------+----------------+
+| Field          | Type
+
+                                                                         | Null
+| Key | Default | Extra          |
++----------------+--------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------------------------------+------
++-----+---------+----------------+
+| carrera_id     | int(11)
+
+                                                                         | NO
+| PRI | null    | auto_increment |
+| nombre_carrera | enum('Arquitectura','Ingenieria industrial','Ingenieria infor
+matica','ingenieria en gestion empresarial','ingenieria en sistemas computaciona
+les','licenciatura en administracion','ingenieria en diseño industrial') | NO
+|     | null    |                |
+| abreviatura    | varchar(50)
+
+                                                                         | NO
+| UNI | null    |                |
++----------------+--------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------------------------------+------
++-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+Creación de tablas de materias según las carreras
+
+mysql-sql> create table ARQ_materias(
+       ... materia_id int key not null auto_increment,
+       ... nombre_materia varchar(70) unique not null,
+       ... creditos_materia int not null,
+       ... horarios_materia varchar(25) not null,
+       ... calificacion_materia int not null);
+Query OK, 0 rows affected (0.34 sec)
+mysql-sql> alter table ARQ_materias change ARQ_materias materias_ARQ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '' at
+ line 1
+mysql-sql> alter table ARQ_materias to materias_ARQ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'to m
+aterias_ARQ' at line 1
+mysql-sql> alter table ARQ_materias rename materias_ARQ;
+Query OK, 0 rows affected (0.17 sec)
+mysql-sql> show tables;
++-----------------------+
+| Tables_in_tecnologico |
++-----------------------+
+| alumnos               |
+| carreras              |
+| materias_arq          |
++-----------------------+
+3 rows in set (0.00 sec)
+mysql-sql> create table materias_IInd(
+       ... materia_id int key not null auto_increment,
+       ... nombre_materia varchar(70) unique not null,
+       ... creditos_materia int not null,
+       ... horarios_materia varchar(25) not null,
+       ... calificacion_materia int not null);
+Query OK, 0 rows affected (0.57 sec)
+mysql-sql> create table materias_IINF(
+       ... materia_id int key not null auto_increment,
+       ... nombre_materia varchar(70) unique not null,
+       ... creditos_materia int not null,
+       ... horarios_materia varchar(25) not null,
+       ... calificacion_materia int not null);
+Query OK, 0 rows affected (0.33 sec)
+mysql-sql> create table materias_IGE(
+       ... materia_id int key not null auto_increment,
+       ... nombre_materia varchar(70) unique not null,
+       ... creditos_materia int not null,
+       ... horarios_materia varchar(25) not null,
+       ... calificacion_materia int not null);
+Query OK, 0 rows affected (0.34 sec)
+mysql-sql> create table materias_ISC(
+       ... materia_id int key not null auto_increment,
+       ... nombre_materia varchar(70) unique not null,
+       ... creditos_materia int not null,
+       ... horarios_materia varchar(25) not null,
+       ... calificacion_materia int not null);
+Query OK, 0 rows affected (0.54 sec)
+mysql-sql> create table materias_IDI(
+       ... materia_id int key not null auto_increment,
+       ... nombre_materia varchar(70) unique not null,
+       ... creditos_materia int not null,
+       ... horarios_materia varchar(25) not null,
+       ... calificacion_materia int not null);
+Query OK, 0 rows affected (0.31 sec)
+mysql-sql> create table materias_LA(
+       ... materia_id int key not null auto_increment,
+       ... nombre_materia varchar(70) unique not null,
+       ... creditos_materia int not null,
+       ... horarios_materia varchar(25) not null,
+       ... calificacion_materia int not null);
+Query OK, 0 rows affected (0.37 sec)
+mysql-sql>
+
+Tabla empleados agregada
+
+mysql-sql> show tables;
++-----------------------+
+| Tables_in_tecnologico |
++-----------------------+
+| alumnos               |
+| carreras              |
+| materias_arq          |
+| materias_idi          |
+| materias_ige          |
+| materias_iind         |
+| materias_iinf         |
+| materias_isc          |
+| materias_la           |
++-----------------------+
+9 rows in set (0.00 sec)
+mysql-sql> create table Empleados(
+       ... empleado_id int key not null auto_increment,
+       ... tipo_empleado ENUM('soporte','docente') not null,
+       ... nombre_empleado varchar(50) not null,
+       ... apellido_pat_empleado varchar(50) not null,
+       ... apellido_mat_empleado varchar(50) not null,
+       ... direccion_empleado varchar(120) not null,
+       ... correo_empleado varchar(50) not null unique,
+       ... plaza_empleado varchar(50) not null,
+       ... horas_trabajo int not null,
+       ... referencias_empleado varchar(120));
+Query OK, 0 rows affected (0.35 sec)
+mysql-sql> alter table alumnos add direccion_alumno varchar(120) not null after
+apellido_materno;
+Query OK, 0 rows affected (0.67 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc alumnos;
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+| Field            | Type
+
+                                                                           | Nul
+l | Key | Default | Extra          |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+| alumno_id        | int(11)
+
+                                                                           | NO
+  | PRI | null    | auto_increment |
+| nombre_alumno    | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| apellido_paterno | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| apellido_materno | varchar(50)
+
+                                                                           | NO
+  |     | null    |                |
+| direccion_alumno | varchar(120)
+
+                                                                           | NO
+  |     | null    |                |
+| carrera          | enum('Arquitectura','Ingenieria industrial','Ingenieria inf
+ormatica','Ingenieria en gestion empresarial','Ingenieria en sistemas computacio
+nales','Licenciatura en administracion','Ingenieria en diseño industrial') | NO
+  |     | null    |                |
+| semestre         | int(11)
+
+                                                                           | NO
+  |     | null    |                |
+| correo           | varchar(50)
+
+                                                                           | NO
+  | UNI | null    |                |
++------------------+------------------------------------------------------------
+--------------------------------------------------------------------------------
+---------------------------------------------------------------------------+----
+--+-----+---------+----------------+
+8 rows in set (0.00 sec)
+mysql-sql> show tables;
++-----------------------+
+| Tables_in_tecnologico |
++-----------------------+
+| alumnos               |
+| carreras              |
+| empleados             |
+| materias_arq          |
+| materias_idi          |
+| materias_ige          |
+| materias_iind         |
+| materias_iinf         |
+| materias_isc          |
+| materias_la           |
++-----------------------+
+10 rows in set (0.00 sec)
+mysql-sql>
+
+Creación tabla datos del instituto
+           
+mysql-sql> create table Datos_instituto(
+       ... nombre_instituto varchar(50) key not null,
+       ... direccion_instituto varchar(120) not null,
+       ... contacto_instituto int unique not null,
+       ... carreras_ofrecidas varchar(120) not null);
+Query OK, 0 rows affected (0.36 sec)
+mysql-sql> show tables;
++-----------------------+
+| Tables_in_tecnologico |
++-----------------------+
+| alumnos               |
+| carreras              |
+| datos_instituto       |
+| empleados             |
+| materias_arq          |
+| materias_idi          |
+| materias_ige          |
+| materias_iind         |
+| materias_iinf         |
+| materias_isc          |
+| materias_la           |
++-----------------------+
+11 rows in set (0.00 sec)
+mysql-sql> create table departamentos
+
+Creación tabla departamentos
+
+mysql-sql> show tables;
++-----------------------+
+| Tables_in_tecnologico |
++-----------------------+
+| alumnos               |
+| carreras              |
+| datos_instituto       |
+| empleados             |
+| materias_arq          |
+| materias_idi          |
+| materias_ige          |
+| materias_iind         |
+| materias_iinf         |
+| materias_isc          |
+| materias_la           |
++-----------------------+
+11 rows in set (0.00 sec)
+mysql-sql> create table departamentos(
+       ... departamento_id int key not null auto_increment,
+       ... nombre_departamento varchar(50) unique not null,
+       ... jefe_departamento varchar(100) not null,
+       ... presupuesto int set default 20000,
+       ... numero_empleados int set default 5);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'set
+default 20000,
+numero_empleados int set default 5)' at line 5
+mysql-sql> create table departamentos(
+       ... departamento_id int key not null auto_increment,
+       ... nombre_departamento varchar(50) unique not null,
+       ... jefe_departamento varchar(100) not null,
+       ... presupuesto int set default "20000",
+       ... numero_empleados int set default "5");
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'set
+default "20000",
+numero_empleados int set default "5")' at line 5
+mysql-sql> create table departamentos(
+       ... departamento_id int key not null auto_increment,
+       ... nombre_departamento varchar(50) unique not null,
+       ... jefe_departamento varchar(100) not null,
+       ... presupuesto int default 20000,
+       ... numero_empleados int default 5);
+Query OK, 0 rows affected (0.46 sec)
+mysql-sql> show tables;
++-----------------------+
+| Tables_in_tecnologico |
++-----------------------+
+| alumnos               |
+| carreras              |
+| datos_instituto       |
+| departamentos         |
+| empleados             |
+| materias_arq          |
+| materias_idi          |
+| materias_ige          |
+| materias_iind         |
+| materias_iinf         |
+| materias_isc          |
+| materias_la           |
++-----------------------+
+12 rows in set (0.00 sec)
+mysql-sql> desc empleados;
++-----------------------+---------------------------+------+-----+---------+----
+------------+
+| Field                 | Type                      | Null | Key | Default | Ext
+ra          |
++-----------------------+---------------------------+------+-----+---------+----
+------------+
+| empleado_id           | int(11)                   | NO   | PRI | null    | aut
+o_increment |
+| tipo_empleado         | enum('soporte','docente') | NO   |     | null    |
+            |
+| nombre_empleado       | varchar(50)               | NO   |     | null    |
+            |
+| apellido_pat_empleado | varchar(50)               | NO   |     | null    |
+            |
+| apellido_mat_empleado | varchar(50)               | NO   |     | null    |
+            |
+| direccion_empleado    | varchar(120)              | NO   |     | null    |
+            |
+| correo_empleado       | varchar(50)               | NO   | UNI | null    |
+            |
+| plaza_empleado        | varchar(50)               | NO   |     | null    |
+            |
+| horas_trabajo         | int(11)                   | NO   |     | null    |
+            |
+| referencias_empleado  | varchar(120)              | YES  |     | null    |
+            |
++-----------------------+---------------------------+------+-----+---------+----
+------------+
+10 rows in set (0.00 sec)
+mysql-sql> alter table empleados add salario_min int default 10000 after horas_t
+rabajo;
+Query OK, 0 rows affected (0.67 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> alter table empleados add salario_max int not null after salario_min;
+
+Query OK, 0 rows affected (0.51 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc empleados;
++-----------------------+---------------------------+------+-----+---------+----
+------------+
+| Field                 | Type                      | Null | Key | Default | Ext
+ra          |
++-----------------------+---------------------------+------+-----+---------+----
+------------+
+| empleado_id           | int(11)                   | NO   | PRI | null    | aut
+o_increment |
+| tipo_empleado         | enum('soporte','docente') | NO   |     | null    |
+            |
+| nombre_empleado       | varchar(50)               | NO   |     | null    |
+            |
+| apellido_pat_empleado | varchar(50)               | NO   |     | null    |
+            |
+| apellido_mat_empleado | varchar(50)               | NO   |     | null    |
+            |
+| direccion_empleado    | varchar(120)              | NO   |     | null    |
+            |
+| correo_empleado       | varchar(50)               | NO   | UNI | null    |
+            |
+| plaza_empleado        | varchar(50)               | NO   |     | null    |
+            |
+| horas_trabajo         | int(11)                   | NO   |     | null    |
+            |
+| salario_min           | int(11)                   | YES  |     | 10000   |
+            |
+| salario_max           | int(11)                   | NO   |     | null    |
+            |
+| referencias_empleado  | varchar(120)              | YES  |     | null    |
+            |
++-----------------------+---------------------------+------+-----+---------+----
+------------+
+12 rows in set (0.01 sec)
+mysql-sql>
+
+Creación de usuarios con privilegios
+alumno y director
+
+mysql-sql> \connect -c root@localhost
+Creating a Classic Session to 'root@localhost'
+Enter password: ****
+Closing old connection...
+Your MySQL connection id is 15
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> create user 'alumno_exam'@'localhost' identified by 'qqqq';
+Query OK, 0 rows affected (0.01 sec)
+mysql-sql> create user 'maestro_exam'@'localhost' identified by 'qqqq';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> create user 'jefe_exam'@'localhost' identified by 'qqqq';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> create user 'director_exam'@'localhost' identified by 'qqqq';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> create user 'secretaria_exam'@'localhost' identified by 'qqqq';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.* to 'director_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.datos_instituto to 'alumno_exam'@'localho
+st';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.carreras to 'alumno_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_arq to 'alumno_exam'@'localhost'
+;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_idi to 'alumno_exam'@'localhost'
+;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_ige to 'alumno_exam'@'localhost'
+;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_iind to 'alumno_exam'@'localhost
+';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_iinf to 'alumno_exam'@'localhost
+';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_isc to 'alumno_exam'@'localhost'
+;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_la to 'alumno_exam'@'localhost';
+
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> \connect -c alumno_exam@localhost
+Creating a Classic Session to 'alumno_exam@localhost'
+Enter password: ****
+Closing old connection...
+Your MySQL connection id is 26
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| tecnologico        |
++--------------------+
+2 rows in set (0.00 sec)
+mysql-sql> \use tecnologico
+Schema set to `tecnologico`.
+mysql-sql> show tables;
++-----------------------+
+| Tables_in_tecnologico |
++-----------------------+
+| carreras              |
+| datos_instituto       |
+| materias_arq          |
+| materias_idi          |
+| materias_ige          |
+| materias_iind         |
+| materias_iinf         |
+| materias_isc          |
+| materias_la           |
++-----------------------+
+9 rows in set (0.00 sec)
+mysql-sql> desc carreras;
++----------------+--------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------------------------------+------
++-----+---------+----------------+
+| Field          | Type
+
+                                                                         | Null
+| Key | Default | Extra          |
++----------------+--------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------------------------------+------
++-----+---------+----------------+
+| carrera_id     | int(11)
+
+                                                                         | NO
+| PRI | null    | auto_increment |
+| nombre_carrera | enum('Arquitectura','Ingenieria industrial','Ingenieria infor
+matica','ingenieria en gestion empresarial','ingenieria en sistemas computaciona
+les','licenciatura en administracion','ingenieria en diseño industrial') | NO
+|     | null    |                |
+| abreviatura    | varchar(50)
+
+                                                                         | NO
+| UNI | null    |                |
++----------------+--------------------------------------------------------------
+--------------------------------------------------------------------------------
+-------------------------------------------------------------------------+------
++-----+---------+----------------+
+3 rows in set (0.00 sec)
+mysql-sql> alter table carreras add comando_1 int;
+ERROR: 1142 (42000): ALTER command denied to user 'alumno_exam'@'localhost' for
+table 'carreras'
+mysql-sql> intert into carreras values(1,'Arquitectura','ARQ');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'inte
+rt into carreras values(1,'Arquitectura','ARQ')' at line 1
+mysql-sql> intert into carreras values(1,Arquitectura,'ARQ');
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'inte
+rt into carreras values(1,Arquitectura,'ARQ')' at line 1
+mysql-sql> insert into carreras values(1,'Arquitectura','ARQ');
+ERROR: 1142 (42000): INSERT command denied to user 'alumno_exam'@'localhost' for
+ table 'carreras'
+mysql-sql>
+
+Privilegios secretaria, jefes, maestro
+
+mysql-sql> \connect -c root@localhost
+Creating a Classic Session to 'root@localhost'
+Enter password: ****
+Closing old connection...
+Your MySQL connection id is 27
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> grant all on tecnlogico.materias_arq to 'jefe'@'localhost';
+ERROR: 1133 (42000): Can't find any matching row in the user table
+mysql-sql> grant all on tecnologico.materias_arq to 'jefe'@'localhost';
+ERROR: 1133 (42000): Can't find any matching row in the user table
+mysql-sql> grant all on tecnologico.materias_arq to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_idi to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_ige to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_iind to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_iinf to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_isc to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_la to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.empleados to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.alumnos to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.carreras to 'jefe_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.departamentos to 'jefe_exam'@'localhost';
+
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.datos_instituto to 'jefe_exam'@'localhost
+';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.datos_instituto to 'secretaria_exam'@'localh
+ost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.alumnos to 'secretaria_exam'@'localhost';
+Query OK, 0 rows affected (0.01 sec)
+mysql-sql> grant all on tecnologico.departamentos to 'secretaria_exam'@'localhos
+t';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.empleados to 'secretaria_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.carreras to 'secretaria_exam'@'localhost'
+;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_arq to 'secretaria_exam'@'localh
+ost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_idi to 'secretaria_exam'@'localh
+ost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_ige to 'secretaria_exam'@'localh
+ost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_iind to 'secretaria_exam'@'local
+host';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_iinf to 'secretaria_exam'@'local
+host';
+Query OK, 0 rows affected (0.01 sec)
+mysql-sql> grant select on tecnologico.materias_isc to 'secretaria_exam'@'localh
+ost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.materias_la to 'secretaria_exam'@'localho
+st';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.departamentos to 'maestro_exam'@'localhos
+t';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.datos_instituto to 'maestro_exam'@'localh
+ost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.carreras to 'maestro_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant select on tecnologico.alumnos to 'maestro_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_la to 'maestro_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_isc to 'maestro_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_iinf to 'maestro_exam'@'localhost';
+
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_iind to 'maestro_exam'@'localhost';
+
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_ige to 'maestro_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_idi to 'maestro_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> grant all on tecnologico.materias_arq to 'maestro_exam'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql>

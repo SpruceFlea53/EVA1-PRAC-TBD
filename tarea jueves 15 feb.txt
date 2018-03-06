@@ -1,0 +1,12 @@
+crear una base de datos personal 
+	crear una tabla empleada
+		clave_empleado primary key
+		apellido no nulo
+		nombre no nulo
+		salario_min default 20000
+		salario_max
+		departamento enum(sistemas, produccion, humanos,finanzas, jefes)
+		clave_acceso cadena unique
+
+insertar un campo para demostrar enum, default y unique (permite nulos)
+investigar como recuperar la ultima clave autoincrementada

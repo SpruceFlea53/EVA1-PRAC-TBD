@@ -1,0 +1,228 @@
+MySQL Shell 1.0.10
+
+Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+Currently in JavaScript mode. Use \sql to switch to SQL mode and execute queries
+.
+mysql-js> \sql
+Switching to SQL mode... Commands end with ;
+mysql-sql> \connect -c root@localhost
+Creating a Classic Session to 'root@localhost'
+Enter password: ****
+Your MySQL connection id is 3
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mundo              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.05 sec)
+mysql-sql> \use world
+Schema set to `world`.
+mysql-sql> show tables;
++-----------------+
+| Tables_in_world |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
++-----------------+
+3 rows in set (0.00 sec)
+mysql-sql> create table mundo.copia_paises as select * from world.country;
+Query OK, 239 rows affected (0.88 sec)
+
+Records: 239  Duplicates: 0  Warnings: 0
+mysql-sql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mundo              |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+mysql-sql> \use mundo
+Schema set to `mundo`.
+mysql-sql> show tables;
++-----------------+
+| Tables_in_mundo |
++-----------------+
+| copia_paises    |
+| paises          |
+| paises_copia    |
++-----------------+
+3 rows in set (0.00 sec)
+mysql-sql> select * from copia_paises limit 3;
++------+-------------+---------------+---------------------------+-------------+
+-----------+------------+----------------+------+--------+----------------------
+-+----------------------------------------------+--------------------------+----
+-----+-------+
+| Code | Name        | Continent     | Region                    | SurfaceArea |
+ IndepYear | Population | LifeExpectancy | GNP  | GNPOld | LocalName
+ | GovernmentForm                               | HeadOfState              | Cap
+ital | Code2 |
++------+-------------+---------------+---------------------------+-------------+
+-----------+------------+----------------+------+--------+----------------------
+-+----------------------------------------------+--------------------------+----
+-----+-------+
+| ABW  | Aruba       | North America | Caribbean                 |         193 |
+      null |     103000 |           78.4 |  828 |    793 | Aruba
+ | Nonmetropolitan Territory of The Netherlands | Beatrix                  |
+ 129 | AW    |
+| AFG  | Afghanistan | Asia          | Southern and Central Asia |      652090 |
+      1919 |   22720000 |           45.9 | 5976 |   null | Afganistan/Afqanestan
+ | Islamic Emirate                              | Mohammad Omar            |
+   1 | AF    |
+| AGO  | Angola      | Africa        | Central Africa            | 1.2467e+006 |
+      1975 |   12878000 |           38.3 | 6648 |   7984 | Angola
+ | Republic                                     | Jos+¬ Eduardo dos Santos |
+  56 | AO    |
++------+-------------+---------------+---------------------------+-------------+
+-----------+------------+----------------+------+--------+----------------------
+-+----------------------------------------------+--------------------------+----
+-----+-------+
+3 rows in set (0.00 sec)
+mysql-sql> desc copia_paises;
++----------------+--------------------------------------------------------------
+-------------------------+------+-----+---------+-------+
+| Field          | Type
+                         | Null | Key | Default | Extra |
++----------------+--------------------------------------------------------------
+-------------------------+------+-----+---------+-------+
+| Code           | char(3)
+                         | NO   |     |         |       |
+| Name           | char(52)
+                         | NO   |     |         |       |
+| Continent      | enum('Asia','Europe','North America','Africa','Oceania','Anta
+rctica','South America') | NO   |     | Asia    |       |
+| Region         | char(26)
+                         | NO   |     |         |       |
+| SurfaceArea    | float(10,2)
+                         | NO   |     | 0.00    |       |
+| IndepYear      | smallint(6)
+                         | YES  |     | null    |       |
+| Population     | int(11)
+                         | NO   |     | 0       |       |
+| LifeExpectancy | float(3,1)
+                         | YES  |     | null    |       |
+| GNP            | float(10,2)
+                         | YES  |     | null    |       |
+| GNPOld         | float(10,2)
+                         | YES  |     | null    |       |
+| LocalName      | char(45)
+                         | NO   |     |         |       |
+| GovernmentForm | char(45)
+                         | NO   |     |         |       |
+| HeadOfState    | char(60)
+                         | YES  |     | null    |       |
+| Capital        | int(11)
+                         | YES  |     | null    |       |
+| Code2          | char(2)
+                         | NO   |     |         |       |
++----------------+--------------------------------------------------------------
+-------------------------+------+-----+---------+-------+
+15 rows in set (0.00 sec)
+mysql-sql> create table mundo.copia_paises_temp as select * from world.country;
+MySQL Shell 1.0.10
+
+Copyright (c) 2016, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+Currently in JavaScript mode. Use \sql to switch to SQL mode and execute queries
+.
+mysql-js> \sql
+Switching to SQL mode... Commands end with ;
+mysql-sql> \connect -c ruler@localhost;
+Creating a Classic Session to 'ruler@localhost;'
+Enter password: ****
+ERROR: 2005 (HY000): Unknown MySQL server host 'localhost;' (0)
+mysql-sql> \connect -c ruler@localhost
+Creating a Classic Session to 'ruler@localhost'
+Enter password: ****
+Your MySQL connection id is 5
+Server version: 5.7.20-log MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> \use mundo
+Schema set to `mundo`.
+mysql-sql> show tables;
++-------------------+
+| Tables_in_mundo   |
++-------------------+
+| comida_mundo      |
+| copia_paises      |
+| copia_paises_temp |
+| paises            |
+| paises_copia      |
++-------------------+
+5 rows in set (0.00 sec)
+mysql-sql> insert into comida_mundo values(1,'burritos',10.2);
+Query OK, 1 row affected (0.12 sec)
+mysql-sql> select * from comida_mundo;
++-----------+---------------+--------+
+| comida_id | nombre_comida | precio |
++-----------+---------------+--------+
+|         1 | burritos      |  10.20 |
++-----------+---------------+--------+
+1 row in set (0.00 sec)
+mysql-sql> insert into comida_mundo values(1,'burrotes',10.2);
+ERROR: 1265 (01000): Data truncated for column 'nombre_comida' at row 1
+mysql-sql> insert into comida_mundo values(1,'tacos',20.5);
+Query OK, 1 row affected (0.11 sec)
+mysql-sql> select * from comida_mundo;
++-----------+---------------+--------+
+| comida_id | nombre_comida | precio |
++-----------+---------------+--------+
+|         1 | burritos      |  10.20 |
+|         1 | tacos         |  20.50 |
++-----------+---------------+--------+
+2 rows in set (0.00 sec)
+mysql-sql> create table viajero(
+       ... viajero_id int not null,
+       ... articulo varchar(40),
+       ... viaticos decimal(10,2) not null);
+Query OK, 0 rows affected (0.75 sec)
+mysql-sql> desc viajero;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| viajero_id | int(11)       | NO   |     | null    |       |
+| articulo   | varchar(40)   | YES  |     | null    |       |
+| viaticos   | decimal(10,2) | NO   |     | null    |       |
++------------+---------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql-sql> insert into viajero values(1,'mochila',10);
+Query OK, 1 row affected (0.05 sec)
+mysql-sql> select * from viajero;
++------------+----------+----------+
+| viajero_id | articulo | viaticos |
++------------+----------+----------+
+|          1 | mochila  |    10.00 |
++------------+----------+----------+
+1 row in set (0.00 sec)
+mysql-sql> insert into viajero(viajero_id, articulo, viaticos) values(1,'algo',1
+0000);
+Query OK, 1 row affected (0.15 sec)
+mysql-sql>

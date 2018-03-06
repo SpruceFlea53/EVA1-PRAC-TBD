@@ -1,0 +1,315 @@
+crear tabla ciudadano
+	id entero key not null autoincrement
+	nombre cadena not null
+	apellido cadena not null
+	edad int
+	RFC cadena unique
+	lugar_nacimiento cadena default Chihuahua
+	pais_nacimiento cadena default Mexico
+	genero varchar not null
+
+tabla 
+	id int 
+	nombre	varchar(50)
+	apllido varchar(100)
+
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| id      | int(11)      | YES  |     | null    |       |
+| nombre  | varchar(50)  | YES  |     | null    |       |
+| apllido | varchar(100) | YES  |     | null    |       |
+| edad    | int(11)      | YES  |     | null    |       |
++---------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano add RFC varchar(13) after apllido;
+Query OK, 0 rows affected (1.01 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| id      | int(11)      | YES  |     | null    |       |
+| nombre  | varchar(50)  | YES  |     | null    |       |
+| apllido | varchar(100) | YES  |     | null    |       |
+| RFC     | varchar(13)  | YES  |     | null    |       |
+| edad    | int(11)      | YES  |     | null    |       |
++---------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano add lugar_nacimiento varchar(50), pais_nacimien
+to varchar(50), genero varchar(1);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near 'pais
+_nacimiento varchar(50), genero varchar(1)' at line 1
+mysql-sql> alter table ciudadano add lugar_nacimiento varchar(50), add pais_naci
+miento varchar(50), add  genero varchar(1);
+Query OK, 0 rows affected (0.91 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+--------------+------+-----+---------+-------+
+| Field            | Type         | Null | Key | Default | Extra |
++------------------+--------------+------+-----+---------+-------+
+| id               | int(11)      | YES  |     | null    |       |
+| nombre           | varchar(50)  | YES  |     | null    |       |
+| apllido          | varchar(100) | YES  |     | null    |       |
+| RFC              | varchar(13)  | YES  |     | null    |       |
+| edad             | int(11)      | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50)  | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50)  | YES  |     | null    |       |
+| genero           | varchar(1)   | YES  |     | null    |       |
++------------------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano change apllido apellido;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '' at
+ line 1
+mysql-sql> alter table ciudadano change apllido apellido varchar(50);
+Query OK, 0 rows affected (1.79 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| id               | int(11)     | YES  |     | null    |       |
+| nombre           | varchar(50) | YES  |     | null    |       |
+| apellido         | varchar(50) | YES  |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(1)  | YES  |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+mysql-sql> alter table ciudadano change id ciudadano_id int;
+Query OK, 0 rows affected (0.16 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| ciudadano_id     | int(11)     | YES  |     | null    |       |
+| nombre           | varchar(50) | YES  |     | null    |       |
+| apellido         | varchar(50) | YES  |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(1)  | YES  |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano change genero genero varchar(13);
+Query OK, 0 rows affected (0.11 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| ciudadano_id     | int(11)     | YES  |     | null    |       |
+| nombre           | varchar(50) | YES  |     | null    |       |
+| apellido         | varchar(50) | YES  |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(13) | YES  |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano change ciudadano_id ciudadano_id int not null;
+
+Query OK, 0 rows affected (0.99 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| ciudadano_id     | int(11)     | NO   |     | null    |       |
+| nombre           | varchar(50) | YES  |     | null    |       |
+| apellido         | varchar(50) | YES  |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(13) | YES  |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano change nombre nombre varchar(50) not null,;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that
+ corresponds to your MySQL server version for the right syntax to use near '' at
+ line 1
+mysql-sql> alter table ciudadano change nombre nombre varchar(50) not null,
+       ... change apellido apellido varchar(50) not null,
+       ... change genero genero varchar(50) not null;
+Query OK, 0 rows affected (2.29 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| ciudadano_id     | int(11)     | NO   |     | null    |       |
+| nombre           | varchar(50) | NO   |     | null    |       |
+| apellido         | varchar(50) | NO   |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(50) | NO   |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano change genero genero varchar(15) not null;
+Query OK, 0 rows affected (2.78 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| ciudadano_id     | int(11)     | NO   |     | null    |       |
+| nombre           | varchar(50) | NO   |     | null    |       |
+| apellido         | varchar(50) | NO   |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(15) | NO   |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano add inutil varchar(50);
+Query OK, 0 rows affected (0.62 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| ciudadano_id     | int(11)     | NO   |     | null    |       |
+| nombre           | varchar(50) | NO   |     | null    |       |
+| apellido         | varchar(50) | NO   |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(15) | NO   |     | null    |       |
+| inutil           | varchar(50) | YES  |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano drop inutil;
+Query OK, 0 rows affected (0.60 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| ciudadano_id     | int(11)     | NO   |     | null    |       |
+| nombre           | varchar(50) | NO   |     | null    |       |
+| apellido         | varchar(50) | NO   |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(15) | NO   |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano add primary key(ciudadano_id);
+Query OK, 0 rows affected (0.64 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| ciudadano_id     | int(11)     | NO   | PRI | null    |       |
+| nombre           | varchar(50) | NO   |     | null    |       |
+| apellido         | varchar(50) | NO   |     | null    |       |
+| RFC              | varchar(13) | YES  |     | null    |       |
+| edad             | int(11)     | YES  |     | null    |       |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |       |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |       |
+| genero           | varchar(15) | NO   |     | null    |       |
++------------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano change ciudadano_id ciudadano_id int not null a
+uto_increment;
+Query OK, 0 rows affected (0.82 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+----------------+
+| Field            | Type        | Null | Key | Default | Extra          |
++------------------+-------------+------+-----+---------+----------------+
+| ciudadano_id     | int(11)     | NO   | PRI | null    | auto_increment |
+| nombre           | varchar(50) | NO   |     | null    |                |
+| apellido         | varchar(50) | NO   |     | null    |                |
+| RFC              | varchar(13) | YES  |     | null    |                |
+| edad             | int(11)     | YES  |     | null    |                |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |                |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |                |
+| genero           | varchar(15) | NO   |     | null    |                |
++------------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano add unique(RFC);
+Query OK, 0 rows affected (0.38 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+---------+----------------+
+| Field            | Type        | Null | Key | Default | Extra          |
++------------------+-------------+------+-----+---------+----------------+
+| ciudadano_id     | int(11)     | NO   | PRI | null    | auto_increment |
+| nombre           | varchar(50) | NO   |     | null    |                |
+| apellido         | varchar(50) | NO   |     | null    |                |
+| RFC              | varchar(13) | YES  | UNI | null    |                |
+| edad             | int(11)     | YES  |     | null    |                |
+| lugar_nacimiento | varchar(50) | YES  |     | null    |                |
+| pais_nacimiento  | varchar(50) | YES  |     | null    |                |
+| genero           | varchar(15) | NO   |     | null    |                |
++------------------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano alter lugar_nacimiento set default "Chihuahua";
+
+Query OK, 0 rows affected (0.06 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+-----------+----------------+
+| Field            | Type        | Null | Key | Default   | Extra          |
++------------------+-------------+------+-----+-----------+----------------+
+| ciudadano_id     | int(11)     | NO   | PRI | null      | auto_increment |
+| nombre           | varchar(50) | NO   |     | null      |                |
+| apellido         | varchar(50) | NO   |     | null      |                |
+| RFC              | varchar(13) | YES  | UNI | null      |                |
+| edad             | int(11)     | YES  |     | null      |                |
+| lugar_nacimiento | varchar(50) | YES  |     | Chihuahua |                |
+| pais_nacimiento  | varchar(50) | YES  |     | null      |                |
+| genero           | varchar(15) | NO   |     | null      |                |
++------------------+-------------+------+-----+-----------+----------------+
+8 rows in set (0.00 sec)
+mysql-sql> alter table ciudadano alter pais_nacimiento set default "Mexico";
+Query OK, 0 rows affected (0.06 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc ciudadano;
++------------------+-------------+------+-----+-----------+----------------+
+| Field            | Type        | Null | Key | Default   | Extra          |
++------------------+-------------+------+-----+-----------+----------------+
+| ciudadano_id     | int(11)     | NO   | PRI | null      | auto_increment |
+| nombre           | varchar(50) | NO   |     | null      |                |
+| apellido         | varchar(50) | NO   |     | null      |                |
+| RFC              | varchar(13) | YES  | UNI | null      |                |
+| edad             | int(11)     | YES  |     | null      |                |
+| lugar_nacimiento | varchar(50) | YES  |     | Chihuahua |                |
+| pais_nacimiento  | varchar(50) | YES  |     | Mexico    |                |
+| genero           | varchar(15) | NO   |     | null      |                |
++------------------+-------------+------+-----+-----------+----------------+
+8 rows in set (0.00 sec)
+mysql-sql>
